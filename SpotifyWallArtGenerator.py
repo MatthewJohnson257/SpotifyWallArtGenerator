@@ -27,7 +27,7 @@ def searchSongButtonClick():
     colorHexCode = colorHexTextbox.get("1.0", "end-1c")
 
     albumArtImage = retrieveImageFromUrl(spotifyResults[0])
-    songCodeImage = retrieveImageFromUrl("https://scannables.scdn.co/uri/plain/png/" + colorHexCode + "/white/640/spotify:playlist:0qtAGoh3i4qOdw0pKaFjMz")
+    songCodeImage = retrieveImageFromUrl("https://scannables.scdn.co/uri/plain/png/" + colorHexCode + "/white/640/spotify:track:" + spotifyResults[3])
 
     final_thumb = Image.new(mode='RGBA',size=[760,1140],color="black")
     final_thumb.paste(albumArtImage, [60,60])
@@ -83,7 +83,7 @@ def modifyButtonClick():
     colorHexCode = colorHexTextbox.get("1.0", "end-1c")
 
     albumArtImage = retrieveImageFromUrl(spotifyResults[0])
-    songCodeImage = retrieveImageFromUrl("https://scannables.scdn.co/uri/plain/png/" + colorHexCode + "/white/640/spotify:playlist:0qtAGoh3i4qOdw0pKaFjMz")
+    songCodeImage = retrieveImageFromUrl("https://scannables.scdn.co/uri/plain/png/" + colorHexCode + "/white/640/spotify:track:" + spotifyResults[3])
 
     final_thumb = Image.new(mode='RGBA',size=[760,1140],color="black")
     final_thumb.paste(albumArtImage, [60,60])
@@ -159,8 +159,9 @@ def callSpotifyAPI():
     songResults = spotify.search(q='track:' + songInput + ' ' + artistInput, type='track')
     albumArtUrl = songResults['tracks']['items'][0]['album']['images'][0]['url']
     songTitle = songResults['tracks']['items'][0]['name']
+    songId = songResults['tracks']['items'][0]['id']
     songArtist = songResults['tracks']['items'][0]['artists'][0]['name']
-    return [albumArtUrl, songTitle, songArtist]
+    return [albumArtUrl, songTitle, songArtist, songId]
 
 def retrieveImageFromUrl(url):
     imageRequest = requests.get(url)
